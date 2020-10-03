@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tda.darkarmy.sivalikorganics">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.employee.EmployeeDetailsActivity"></activity>
+        <activity android:name=".activity.employee.PaySalaryActivity" />
+        <activity
+            android:name=".activity.importdetails.EditImportDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.importdetails.AddImportDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.importdetails.ImportDetailsActivity" />
+        <activity
+            android:name=".activity.exportdetails.AddExportDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.exportdetails.EditExportDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.exportdetails.ExportDetailsActivity" />
+        <activity
+            android:name=".activity.seller.SellerDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.seller.SellerActivity" />
+        <activity
+            android:name=".activity.consumer.ConsumerDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.consumer.ConsumerActivity" />
+        <activity
+            android:name=".activity.calf.EditCalfActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.cow.EditCowActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.calf.AddCalfActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.calf.CalfDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.cow.CowDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.cow.AddCowActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.calf.CalfActivity" />
+        <activity android:name=".activity.cow.CowActivity" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.ExpensesActivity" />
+        <activity android:name=".activity.ProfitActivity" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
