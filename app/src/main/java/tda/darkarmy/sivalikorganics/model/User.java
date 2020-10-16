@@ -58,6 +58,14 @@ public class User implements Serializable {
         this.profilePic = profilePic;
     }
 
+    public User(String role, String name, String email, String mobile, String password) {
+        this.role = role;
+        this.name = name;
+        this.email = email;
+        this.mobile = mobile;
+        this.password = password;
+    }
+
     public User(String mobile, String password) {
         this.mobile = mobile;
         this.password = password;

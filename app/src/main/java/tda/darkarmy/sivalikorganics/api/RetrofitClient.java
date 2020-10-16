@@ -6,8 +6,10 @@ import tda.darkarmy.sivalikorganics.service.CalfService;
 import tda.darkarmy.sivalikorganics.service.ConsumerService;
 import tda.darkarmy.sivalikorganics.service.CowService;
 import tda.darkarmy.sivalikorganics.service.EmployeeService;
+import tda.darkarmy.sivalikorganics.service.ExpenseService;
 import tda.darkarmy.sivalikorganics.service.ExportDetailsService;
 import tda.darkarmy.sivalikorganics.service.ImportDetailsService;
+import tda.darkarmy.sivalikorganics.service.NoticeService;
 import tda.darkarmy.sivalikorganics.service.SellerService;
 import tda.darkarmy.sivalikorganics.service.UserService;
 
@@ -60,5 +62,13 @@ public class RetrofitClient {
 
     public EmployeeService getEmployeeService(){
         return retrofit.create(EmployeeService.class);
+    }
+
+    public ExpenseService getExpenseService(){
+        return retrofit.create(ExpenseService.class);
+    }
+
+    public NoticeService getNoticeService(){
+        return retrofit.create(NoticeService.class);
     }
 }

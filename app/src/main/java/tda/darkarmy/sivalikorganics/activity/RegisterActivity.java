@@ -226,7 +226,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registerUser() {
 
-
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
         RequestBody roleRequestBody = RequestBody.create(MediaType.parse("text/plane"), role.toUpperCase());
         RequestBody nameRequestBody = RequestBody.create(MediaType.parse("text/plane"), name.getEditText().getText().toString());

@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.employee.EmployeeDetailsActivity"></activity>
+        <activity android:name=".activity.AddEditNoticeActivity"></activity>
+        <activity android:name=".activity.expense.AddEditExpenseActivity" />
+        <activity android:name=".activity.expense.ExpenseActivity" />
+        <activity android:name=".activity.employee.EmployeeDetailsActivity" />
         <activity android:name=".activity.employee.PaySalaryActivity" />
         <activity
             android:name=".activity.importdetails.EditImportDetailsActivity"
@@ -63,7 +66,6 @@
         <activity
             android:name=".activity.EditProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ExpensesActivity" />
         <activity android:name=".activity.ProfitActivity" />
         <activity
             android:name=".activity.LoginActivity"

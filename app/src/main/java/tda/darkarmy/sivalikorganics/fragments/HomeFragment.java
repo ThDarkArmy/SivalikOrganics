@@ -1,6 +1,8 @@
 package tda.darkarmy.sivalikorganics.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +16,8 @@ import tda.darkarmy.sivalikorganics.R;
 import tda.darkarmy.sivalikorganics.activity.calf.CalfActivity;
 import tda.darkarmy.sivalikorganics.activity.consumer.ConsumerActivity;
 import tda.darkarmy.sivalikorganics.activity.cow.CowActivity;
-import tda.darkarmy.sivalikorganics.activity.ExpensesActivity;
 import tda.darkarmy.sivalikorganics.activity.ProfitActivity;
+import tda.darkarmy.sivalikorganics.activity.expense.ExpenseActivity;
 import tda.darkarmy.sivalikorganics.activity.exportdetails.ExportDetailsActivity;
 import tda.darkarmy.sivalikorganics.activity.importdetails.ImportDetailsActivity;
 import tda.darkarmy.sivalikorganics.activity.seller.SellerActivity;
@@ -36,6 +38,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE);
+        String accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
         bind(root);
         importRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +97,7 @@ public class HomeFragment extends Fragment {
         expensesRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ExpensesActivity.class));
+                startActivity(new Intent(getActivity(), ExpenseActivity.class));
             }
         });
 

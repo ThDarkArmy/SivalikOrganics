@@ -12,22 +12,36 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tda.darkarmy.sivalikorganics.R;
+import tda.darkarmy.sivalikorganics.api.RetrofitClient;
 import tda.darkarmy.sivalikorganics.fragments.HomeFragment;
-import tda.darkarmy.sivalikorganics.fragments.NotificationFragment;
-import tda.darkarmy.sivalikorganics.fragments.ProfileFragment;
+import tda.darkarmy.sivalikorganics.fragments.NoticeDetailFragment;
+import tda.darkarmy.sivalikorganics.fragments.NoticeFragment;
 import tda.darkarmy.sivalikorganics.fragments.SettingsFragment;
+import tda.darkarmy.sivalikorganics.model.ErrorObject;
+import tda.darkarmy.sivalikorganics.model.User;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
+    private CircleImageView profileImage;
+    private TextView name;
+    private TextView number;
     private static String ROLE = null;
 
     @Override
@@ -37,12 +51,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE);
         boolean isLogin = sharedPreferences.getBoolean("ISLOGIN", false);
+        String accessToken;
         ROLE = sharedPreferences.getString("ROLE", null);
         if(!isLogin){
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
+        accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
+
         bind();
+        setProfile(accessToken);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle(null);
         // Navigation View
@@ -54,6 +72,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         setHomeFragment();
 
+    }
+
+    private void setProfile(String accessToken) {
+        RetrofitClient.getInstance().getUserService().getUser(accessToken).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    try{
+                        User user = new GsonBuilder().create().fromJson(response.body().string(), User.class);
+                        Picasso.get().load(user.getProfilePic()).into(profileImage);
+                        name.setText(user.getName());
+                        number.setText(user.getMobile());
+                        Log.i("PROFILE", user.toString());
+                    }catch (Exception ex){
+                        Log.i("PROFILE_EX",  ex.getMessage());
+                        Toast.makeText(MainActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    try{
+                        ErrorObject errorObject = new GsonBuilder().create().fromJson(response.body().string(), ErrorObject.class);
+                        Log.i("PROFILE_ERROR", errorObject.getError().getMsg());
+                        Toast.makeText(MainActivity.this, errorObject.getError().getMsg(), Toast.LENGTH_SHORT).show();
+                    }catch (Exception ex){
+                        Toast.makeText(MainActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("PROFILE_F", t.getMessage());
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -92,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
+        profileImage = findViewById(R.id.nav_header_profile);
+        name = findViewById(R.id.nav_header_name);
+        number = findViewById(R.id.nav_header_number);
     }
 
 
@@ -112,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
             case R.id.notification:
-                fragmentClass = NotificationFragment.class;
+                fragmentClass = NoticeFragment.class;
                 setFragment(fragmentClass, menuItem);
                 break;
             case R.id.settings:
@@ -161,4 +216,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set action bar title
         setTitle(menuItem.getTitle());
     }
+
+
 }
