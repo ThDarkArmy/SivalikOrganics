@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.Serializable;
 
 import tda.darkarmy.sivalikorganics.R;
-import tda.darkarmy.sivalikorganics.fragments.NoticeDetailFragment;
+import tda.darkarmy.sivalikorganics.activity.notice.NoticeDetailActivity;
 import tda.darkarmy.sivalikorganics.model.NoticeList;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder> {
@@ -43,7 +43,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
         mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context.getApplicationContext(), NoticeDetailFragment.class);
+                Intent intent = new Intent(context, NoticeDetailActivity.class);
                 intent.putExtra("NOTICE", (Serializable)noticeList.getNotices().get(position));
                 context.startActivity(intent);
             }
@@ -52,7 +52,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
 
     @Override
     public int getItemCount() {
-        return 0;
+        return noticeList.getNotices().size();
     }
 
     public class NoticeViewHolder extends RecyclerView.ViewHolder{

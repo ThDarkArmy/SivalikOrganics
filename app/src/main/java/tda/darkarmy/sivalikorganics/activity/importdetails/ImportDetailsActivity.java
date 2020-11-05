@@ -235,6 +235,7 @@ public class ImportDetailsActivity extends AppCompatActivity {
 
     public void bind(){
         recyclerView = findViewById(R.id.import_recycler);
+        recyclerView.setNestedScrollingEnabled(false);
         search = findViewById(R.id.search);
         monthYear = findViewById(R.id.month_year);
         totalMilk = findViewById(R.id.total_money);

@@ -35,6 +35,7 @@ public class CalfActivity extends AppCompatActivity {
         String accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
         Log.i("TOKEN", "Bearer "+accessToken);
         recyclerView = findViewById(R.id.calf_recycler);
+        recyclerView.setNestedScrollingEnabled(false);
 
         getAllCalves(accessToken);
     }

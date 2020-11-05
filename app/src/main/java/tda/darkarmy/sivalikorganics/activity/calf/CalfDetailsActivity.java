@@ -88,7 +88,7 @@ public class CalfDetailsActivity extends AppCompatActivity {
                         name.setText(calf.getName());
                         gender.setText(calf.getGender());
                         isHealthy.setText(calf.getIsHealthy()? "Healthy": "Not Healthy");
-                        dob.setText(calf.getDob());
+                        dob.setText(calf.getDob().substring(0,10));
                         profileName.setText(calf.getName());
                         mother.setText(calf.getCow().getName());
 

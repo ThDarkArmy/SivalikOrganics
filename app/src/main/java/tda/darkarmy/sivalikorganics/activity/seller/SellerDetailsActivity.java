@@ -64,7 +64,7 @@ public class SellerDetailsActivity extends AppCompatActivity {
                         name.setText(sellerDetails.getName());
                         phone.setText(sellerDetails.getMobile());
                         email.setText(sellerDetails.getEmail());
-                        dateJoined.setText(sellerDetails.getDateJoined());
+                        dateJoined.setText(sellerDetails.getDateJoined().substring(0,10));
                         milkAmount.setText(sellerDetails.getTotalAmountOfMilkSold()+" Litres");
                         moneyPaid.setText(sellerDetails.getTotalAmountPaid()+" Rupees");
 

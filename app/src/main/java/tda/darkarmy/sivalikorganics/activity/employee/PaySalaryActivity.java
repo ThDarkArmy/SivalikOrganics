@@ -12,8 +12,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -21,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tda.darkarmy.sivalikorganics.R;
 import tda.darkarmy.sivalikorganics.api.RetrofitClient;
+import tda.darkarmy.sivalikorganics.model.ErrorObject;
 import tda.darkarmy.sivalikorganics.model.Salary;
 
 public class PaySalaryActivity extends AppCompatActivity {
@@ -46,13 +51,13 @@ public class PaySalaryActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void pay(String accessToken, String id) {
-        Salary salary = new Salary(true, LocalDate.now().toString(), Integer.parseInt(amount.getEditText().getText().toString()), monthYear.getEditText().getText().toString(), id);
-        RetrofitClient.getInstance().getEmployeeService().paySalary(accessToken, salary).enqueue(new Callback<ResponseBody>() {
+        Date date = new Date();
+        Salary salary = new Salary(Integer.parseInt(amount.getEditText().getText().toString()), monthYear.getEditText().getText().toString(), id);
+        RetrofitClient.getInstance().getEmployeeService().paySalary("Bearer "+accessToken, salary).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
@@ -60,7 +65,13 @@ public class PaySalaryActivity extends AppCompatActivity {
                     intent.putExtra("EMPLOYEE_ID", id);
                     startActivity(intent);
                 }else {
-                    Toast.makeText(PaySalaryActivity.this, "Salary could not be paid.", Toast.LENGTH_SHORT).show();
+
+                    try {
+                        ErrorObject errorObject = new GsonBuilder().create().fromJson(response.errorBody().string(), ErrorObject.class);
+                        Toast.makeText(PaySalaryActivity.this, errorObject.getError().getMsg(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

@@ -38,6 +38,12 @@ public class Salary implements Serializable {
         this.user = user;
     }
 
+    public Salary(Integer amount, String ofMonthAndYear, String user) {
+        this.amount = amount;
+        this.ofMonthAndYear = ofMonthAndYear;
+        this.user = user;
+    }
+
     @JsonProperty("isPaid")
     public Boolean getIsPaid() {
         return isPaid;

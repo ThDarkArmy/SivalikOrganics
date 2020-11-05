@@ -1,4 +1,4 @@
-package tda.darkarmy.sivalikorganics.activity;
+package tda.darkarmy.sivalikorganics.activity.notice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,19 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.io.Serializable;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tda.darkarmy.sivalikorganics.R;
+import tda.darkarmy.sivalikorganics.activity.MainActivity;
 import tda.darkarmy.sivalikorganics.api.RetrofitClient;
-import tda.darkarmy.sivalikorganics.fragments.NoticeFragment;
+import tda.darkarmy.sivalikorganics.model.ErrorObject;
 import tda.darkarmy.sivalikorganics.model.Notice;
 
 public class AddEditNoticeActivity extends AppCompatActivity {
@@ -35,12 +41,19 @@ public class AddEditNoticeActivity extends AppCompatActivity {
         String accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
         bind();
 
+
         if(getIntent().getSerializableExtra("NOTICE")==null){
             header.setText("Add Notice");
             addEditNotice.setText("Add Notice");
-            if(validation()){
-                addNotice(accessToken);
-            }
+            addEditNotice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(validation()){
+                        addNotice(accessToken);
+                    }
+                }
+            });
+
 
         }else{
             Notice notice = (Notice)getIntent().getSerializableExtra("NOTICE");
@@ -48,9 +61,16 @@ public class AddEditNoticeActivity extends AppCompatActivity {
             addEditNotice.setText("Update Notice");
             description.getEditText().setText(notice.getDescription());
             title.getEditText().setText(notice.getTitle());
-            if(validation()){
-                updateNotice(accessToken, notice.getId());
-            }
+
+            addEditNotice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(validation()){
+                        updateNotice(accessToken, notice.getId());
+                    }
+                }
+            });
+
 
         }
     }
@@ -61,9 +81,17 @@ public class AddEditNoticeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-                    startActivity(new Intent(getApplicationContext(), NoticeFragment.class));
+
+                    Intent intent = new Intent(getApplicationContext(), NoticeDetailActivity.class);
+                    intent.putExtra("NOTICE", (Serializable)notice);
+                    startActivity(intent);
                 }else{
-                    Toast.makeText(AddEditNoticeActivity.this, "Failed to add Notice", Toast.LENGTH_SHORT).show();
+                    try {
+                        ErrorObject errorObject = new GsonBuilder().create().fromJson(response.errorBody().string(), ErrorObject.class);
+                        Toast.makeText(AddEditNoticeActivity.this, errorObject.getError().getMsg(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(AddEditNoticeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -80,9 +108,16 @@ public class AddEditNoticeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-                    startActivity(new Intent(getApplicationContext(), NoticeFragment.class));
+                    Intent intent = new Intent(getApplicationContext(), NoticeDetailActivity.class);
+                    intent.putExtra("NOTICE", (Serializable) notice);
+                    startActivity(intent);
                 }else{
-                    Toast.makeText(AddEditNoticeActivity.this, "Failed to add Notice", Toast.LENGTH_SHORT).show();
+                    try {
+                        ErrorObject errorObject = new GsonBuilder().create().fromJson(response.errorBody().string(), ErrorObject.class);
+                        Toast.makeText(AddEditNoticeActivity.this, errorObject.getError().getMsg(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(AddEditNoticeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -115,4 +150,6 @@ public class AddEditNoticeActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         addEditNotice = findViewById(R.id.add_edit_notice);
     }
+
+
 }

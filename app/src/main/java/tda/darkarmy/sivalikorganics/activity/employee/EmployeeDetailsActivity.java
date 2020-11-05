@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,13 +54,14 @@ public class EmployeeDetailsActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     try{
                         EmployeeDetails employeeDetails = new GsonBuilder().create().fromJson(response.body().string(), EmployeeDetails.class);
+                        Log.i("Employee_DE", employeeDetails.toString());
                         Picasso.get().load(Uri.parse(RetrofitClient.BASE_URL+"/"+employeeDetails.getProfilePic())).into(imageView);
                         profileName.setText(employeeDetails.getName());
                         profileNumber.setText(employeeDetails.getMobile());
                         name.setText(employeeDetails.getName());
                         phone.setText(employeeDetails.getMobile());
                         email.setText(employeeDetails.getEmail());
-                        dateJoined.setText(employeeDetails.getDateJoined());
+                        dateJoined.setText(employeeDetails.getDateJoined().substring(0,10));
                         salaryStatus.setText(employeeDetails.getSalaryStatus());
 
 

@@ -81,12 +81,12 @@
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
             android:id="@+id/expense_recycler"
-            app:layout_constraintVertical_weight="1">
-        </androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintVertical_weight="1"/>
+
         <Button
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:id="@+id/add_expense"
             android:layout_below="@+id/expense_recycler"
             android:layout_width="match_parent"

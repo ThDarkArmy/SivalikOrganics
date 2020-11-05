@@ -38,6 +38,7 @@ public class CowActivity extends AppCompatActivity {
         String accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
         Log.i("TOKEN", "Bearer "+accessToken);
         recyclerView = findViewById(R.id.cow_recycler);
+        recyclerView.setNestedScrollingEnabled(false);
         addCow = findViewById(R.id.add_cow);
         getAllCows(accessToken);
 

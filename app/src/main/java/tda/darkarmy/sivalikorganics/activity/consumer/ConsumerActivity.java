@@ -31,16 +31,17 @@ public class ConsumerActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE);
         String accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
         recyclerView = findViewById(R.id.consumer_recycler);
+        recyclerView.setNestedScrollingEnabled(false);
 
         if(getIntent().getBooleanExtra("DEFAULTER", false)){
-            setTitle("               Defaulters");
+            setTitle("                    Defaulters");
             getAllDefaulters(accessToken);
-        }else if(getIntent().getBooleanExtra("EMPLOYEE", false)){
-            setTitle("               Employees");
+        }else if(getIntent().getBooleanExtra("IS_EMPLOYEE", false)){
+            setTitle("                    Employees");
             getAllEmployees(accessToken);
         }
         else{
-            setTitle("               Consumers");
+            setTitle("                    Consumers");
             getAllConsumer(accessToken);
         }
 

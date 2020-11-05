@@ -13,25 +13,48 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AddEditNoticeActivity"></activity>
-        <activity android:name=".activity.expense.AddEditExpenseActivity" />
-        <activity android:name=".activity.expense.ExpenseActivity" />
-        <activity android:name=".activity.employee.EmployeeDetailsActivity" />
-        <activity android:name=".activity.employee.PaySalaryActivity" />
+        <activity android:name=".activity.notice.NoticeDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.notice.AddEditNoticeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.expense.AddEditExpenseActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.expense.ExpenseActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.employee.EmployeeDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.employee.PaySalaryActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.importdetails.EditImportDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.importdetails.AddImportDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.importdetails.ImportDetailsActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.importdetails.ImportDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.exportdetails.AddExportDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.exportdetails.EditExportDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.exportdetails.ExportDetailsActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.exportdetails.ExportDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.seller.SellerDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -42,13 +65,16 @@
         <activity android:name=".activity.consumer.ConsumerActivity" />
         <activity
             android:name=".activity.calf.EditCalfActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.cow.EditCowActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.calf.AddCalfActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.calf.CalfDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -57,7 +83,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.cow.AddCowActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.calf.CalfActivity" />
         <activity android:name=".activity.cow.CowActivity" />
         <activity
@@ -65,14 +92,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.EditProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.ProfitActivity" />
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

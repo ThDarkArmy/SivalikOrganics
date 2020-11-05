@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,7 +75,11 @@ public class AddEditExpenseActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     startActivity(new Intent(getApplicationContext(), ExpenseActivity.class));
                 }else{
-                    Toast.makeText(AddEditExpenseActivity.this, "Failed to update Expense.", Toast.LENGTH_SHORT).show();
+                    try {
+                        Toast.makeText(AddEditExpenseActivity.this, response.errorBody().string(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

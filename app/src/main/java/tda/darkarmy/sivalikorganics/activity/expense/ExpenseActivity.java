@@ -43,7 +43,7 @@ public class ExpenseActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("AUTH", Context.MODE_PRIVATE);
         String accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
         bind();
-
+        setTitle("                    Expenses");
         getAllExpense(accessToken);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +79,7 @@ public class ExpenseActivity extends AppCompatActivity {
                         totalFood.setText("Food: "+tFood);
                         totalMedicine.setText("Medicine: "+tMedicine);
                         totalOthers.setText("Others: "+tOthers);
-                        ExpenseAdapter expenseAdapter = new ExpenseAdapter(expenseList, getApplicationContext());
+                        ExpenseAdapter expenseAdapter = new ExpenseAdapter(expenseList, ExpenseActivity.this);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setAdapter(expenseAdapter);
 
@@ -124,7 +124,7 @@ public class ExpenseActivity extends AppCompatActivity {
                         totalMedicine.setText("Medicine: "+tMedicine);
                         totalOthers.setText("Others: "+tOthers);
 
-                        ExpenseAdapter expenseAdapter = new ExpenseAdapter(expenseList, getApplicationContext());
+                        ExpenseAdapter expenseAdapter = new ExpenseAdapter(expenseList, ExpenseActivity.this);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setAdapter(expenseAdapter);
 
@@ -150,6 +150,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
     public void bind(){
         recyclerView = findViewById(R.id.expense_recycler);
+        recyclerView.setNestedScrollingEnabled(false);
         search = findViewById(R.id.search);
         addExpense = findViewById(R.id.add_expense);
         month = findViewById(R.id.month_year);

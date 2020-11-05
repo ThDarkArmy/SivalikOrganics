@@ -11,9 +11,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
 
         bind();
-        setProfile(accessToken);
+
         setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle(null);
         // Navigation View
@@ -70,18 +72,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        name = headerView.findViewById(R.id.nav_header_name);
+        number = headerView.findViewById(R.id.nav_header_number);
+        profileImage = headerView.findViewById(R.id.nav_header_profile);
+        setProfile(accessToken);
         setHomeFragment();
-
     }
 
     private void setProfile(String accessToken) {
-        RetrofitClient.getInstance().getUserService().getUser(accessToken).enqueue(new Callback<ResponseBody>() {
+        RetrofitClient.getInstance().getUserService().getUser("Bearer "+accessToken).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     try{
                         User user = new GsonBuilder().create().fromJson(response.body().string(), User.class);
-                        Picasso.get().load(user.getProfilePic()).into(profileImage);
+                        Picasso.get().load(Uri.parse(RetrofitClient.BASE_URL+"/"+user.getProfilePic())).into(profileImage);
                         name.setText(user.getName());
                         number.setText(user.getMobile());
                         Log.i("PROFILE", user.toString());
@@ -106,6 +112,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setNoticeDetailFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Class fragmentClass = NoticeDetailFragment.class;
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment)fragmentClass.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     /**
@@ -144,9 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
-        profileImage = findViewById(R.id.nav_header_profile);
-        name = findViewById(R.id.nav_header_name);
-        number = findViewById(R.id.nav_header_number);
+
     }
 
 
@@ -166,20 +184,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.profile:
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
-            case R.id.notification:
+            case R.id.notice:
                 fragmentClass = NoticeFragment.class;
-                setFragment(fragmentClass, menuItem);
-                break;
-            case R.id.settings:
-                fragmentClass = SettingsFragment.class;
                 setFragment(fragmentClass, menuItem);
                 break;
             case R.id.logout:
                 logout();
-                Toast.makeText(this, "LOGOUT SUCCESSFULLY", Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(this, "No Fragment for this menu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

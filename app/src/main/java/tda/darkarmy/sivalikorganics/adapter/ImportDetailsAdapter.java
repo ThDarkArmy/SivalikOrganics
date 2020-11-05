@@ -45,7 +45,7 @@ public class ImportDetailsAdapter extends RecyclerView.Adapter<ImportDetailsAdap
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ImportDetailsAdapter.ImportViewHolder holder, int position) {
-        holder.date.setText("Date: "+importDetailsList.getImportDetails().get(position).getDate());
+        holder.date.setText("Date: "+importDetailsList.getImportDetails().get(position).getDate().substring(0,10));
         holder.consumer.setText("Consumer: "+importDetailsList.getImportDetails().get(position).getUser().getName());
         holder.amountOfMilk.setText("Amount of Milk: "+importDetailsList.getImportDetails().get(position).getAmountOfMilkBought());
         holder.amountPaid.setText("Amount Paid: "+importDetailsList.getImportDetails().get(position).getAmountPaid());

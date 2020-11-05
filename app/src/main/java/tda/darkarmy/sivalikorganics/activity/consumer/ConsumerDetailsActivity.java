@@ -60,7 +60,7 @@ public class ConsumerDetailsActivity extends AppCompatActivity {
                         name.setText(consumerDetails.getName());
                         phone.setText(consumerDetails.getMobile());
                         email.setText(consumerDetails.getEmail());
-                        dateJoined.setText(consumerDetails.getDateJoined());
+                        dateJoined.setText(consumerDetails.getDateJoined().substring(0,10));
                         milkAmount.setText(consumerDetails.getTotalAmountOfMilkBought()+" Litres");
                         moneyPaid.setText(consumerDetails.getTotalAmountPaid()+" Rupees");
 

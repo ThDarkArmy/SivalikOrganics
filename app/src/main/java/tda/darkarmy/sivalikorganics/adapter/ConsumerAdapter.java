@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import tda.darkarmy.sivalikorganics.R;
 import tda.darkarmy.sivalikorganics.activity.consumer.ConsumerDetailsActivity;
+import tda.darkarmy.sivalikorganics.activity.employee.EmployeeDetailsActivity;
+import tda.darkarmy.sivalikorganics.model.EmployeeDetails;
 import tda.darkarmy.sivalikorganics.model.UserList;
 
 public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.ConsumerViewHolder> {
@@ -38,9 +40,15 @@ public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.Consum
         mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context.getApplicationContext(), ConsumerDetailsActivity.class);
-                intent.putExtra("CONSUMER_ID", userList.getUsers().get(position).getId());
-                context.startActivity(intent);
+                if(userList.getUsers().get(position).getRole().equalsIgnoreCase("employee")){
+                    Intent intent = new Intent(context.getApplicationContext(), EmployeeDetailsActivity.class);
+                    intent.putExtra("EMPLOYEE_ID", userList.getUsers().get(position).getId());
+                    context.startActivity(intent);
+                }else {
+                    Intent intent = new Intent(context.getApplicationContext(), ConsumerDetailsActivity.class);
+                    intent.putExtra("CONSUMER_ID", userList.getUsers().get(position).getId());
+                    context.startActivity(intent);
+                }
             }
         });
     }

@@ -24,8 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tda.darkarmy.sivalikorganics.R;
-import tda.darkarmy.sivalikorganics.activity.AddEditNoticeActivity;
-import tda.darkarmy.sivalikorganics.activity.EditProfileActivity;
+import tda.darkarmy.sivalikorganics.activity.notice.AddEditNoticeActivity;
 import tda.darkarmy.sivalikorganics.adapter.NoticeAdapter;
 import tda.darkarmy.sivalikorganics.api.RetrofitClient;
 import tda.darkarmy.sivalikorganics.model.ErrorObject;
@@ -51,21 +50,23 @@ public class NoticeFragment extends Fragment {
             }
         });
 
-
         return root;
     }
 
     private void getAllNotices(String accessToken) {
-        RetrofitClient.getInstance().getNoticeService().getAllNotices(accessToken).enqueue(new Callback<ResponseBody>() {
+        RetrofitClient.getInstance().getNoticeService().getAllNotices("Bearer "+accessToken).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     try{
                         NoticeList noticeList = new GsonBuilder().create().fromJson(response.body().string(), NoticeList.class);
-                        NoticeAdapter noticeAdapter = new NoticeAdapter(noticeList, getActivity());
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        recyclerView.setAdapter(noticeAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setHasFixedSize(true);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        NoticeAdapter noticeAdapter = new NoticeAdapter(noticeList, getActivity());
+                        recyclerView.setAdapter(noticeAdapter);
+                        //noticeAdapter.notifyDataSetChanged();
+
                     }catch (Exception ex){
                         Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                     }

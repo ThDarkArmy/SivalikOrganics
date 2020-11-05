@@ -1,8 +1,10 @@
 package tda.darkarmy.sivalikorganics.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +42,14 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
         return new ExpenseViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ExpenseAdapter.ExpenseViewHolder holder, int position) {
-        holder.date.setText(expenseList.getExpenses().get(position).getDate());
-        holder.food.setText(expenseList.getExpenses().get(position).getFoodItems());
-        holder.medicine.setText(expenseList.getExpenses().get(position).getMedicinalItems());
-        holder.others.setText(expenseList.getExpenses().get(position).getOthers());
+        Log.i("Expense List:",expenseList.getExpenses().get(position).toString());
+        holder.date.setText("Date: "+expenseList.getExpenses().get(position).getDate().substring(0,10));
+        holder.food.setText("Food: "+expenseList.getExpenses().get(position).getFoodItems().toString());
+        holder.medicine.setText("Medicine: "+expenseList.getExpenses().get(position).getMedicinalItems().toString());
+        holder.others.setText("Others: "+expenseList.getExpenses().get(position).getOthers().toString());
 
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +65,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
             public void onClick(View view) {
                 SharedPreferences sharedPreferences = context.getSharedPreferences("AUTH", Context.MODE_PRIVATE);
                 String accessToken = sharedPreferences.getString("ACCESSTOKEN", null);
-                RetrofitClient.getInstance().getExpenseService().deleteExpense(accessToken, expenseList.getExpenses().get(position).getId()).enqueue(new Callback<ResponseBody>() {
+                RetrofitClient.getInstance().getExpenseService().deleteExpense("Bearer "+accessToken, expenseList.getExpenses().get(position).getId()).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(response.isSuccessful()){

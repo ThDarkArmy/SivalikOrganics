@@ -114,7 +114,7 @@ public class CowDetailsActivity extends AppCompatActivity {
                         isPregnant.setText(cow.getIsPregnant() ? "Yes" : "No");
                         age.setText(cow.getAge().toString()+" Years");
 
-                        pregnantFrom.setText(cow.getIsPregnant()? cow.getPregnantFrom(): "Not Pregnant");
+                        pregnantFrom.setText(cow.getIsPregnant()? cow.getPregnantFrom().substring(0, 10): "Not Pregnant");
                         amountOfMilk.setText(cow.getAmountOfMilk().toString()+ " Litres");
                         isHealthy.setText(cow.getIsHealthy()? "Healthy": " Not Healthy");
                         productive.setText(cow.getIsProductive() ? "Yes" : "No");
